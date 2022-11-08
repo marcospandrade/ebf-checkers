@@ -430,11 +430,10 @@ public class BitCheckersBoard extends CheckersBoard {
 
 		if (index < 21)
 			return (byte) ((board1 >> (61 - index * 3)) & 7);
-		else if (index > 21)
+		if (index > 21)
 			return (byte) ((board2 >> (93 - index * 3)) & 7);
-		else {
-			return (byte) ((((int) board1 & 1) << 2) | (board2 >> 30 & 3));
-		}
+
+		return (byte) ((((int) board1 & 1) << 2) | (board2 >> 30 & 3));
 	}
 
 	@Override
