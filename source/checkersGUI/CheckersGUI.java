@@ -145,7 +145,7 @@ public class CheckersGUI extends JFrame implements MouseListener,
 		 * @return
 		 */
 		public boolean drawCheckersPiece(Graphics g, Color color1,
-				Color color2, int x, int y, int size, byte piece) {
+										 Color color2, int x, int y, int size, byte piece) {
 			if (piece == CheckersBoard.EMPTY || piece == CheckersBoard.OFFBOARD)
 				return false;
 
@@ -168,14 +168,15 @@ public class CheckersGUI extends JFrame implements MouseListener,
 			// Draw 'K' in opposite color if checker is a king
 			if (piece == CheckersBoard.PLAYER2_KING
 					|| piece == CheckersBoard.PLAYER1_KING) {
-				if (!player1)
-					g.setColor(color1);
-				else
+				g.setColor(color1);
+
+				if (player2)
 					g.setColor(color2);
+				break;
 				g.setFont(kingFont);
 				int fontSize = kingFont.getSize() * 2 / 3;
 				g.drawString("K", x + (size - fontSize) / 2, y
-						+ (size + fontSize) / 2);
+						+ (size + fontSize) / 2);
 			}
 
 			return true;
