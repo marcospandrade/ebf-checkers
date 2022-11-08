@@ -476,26 +476,28 @@ public class BitCheckersBoard extends CheckersBoard {
 	}
 
 	@Override
-	protected boolean setPiece(int index, byte pieceType) {
+	protected void setPiece(int index, byte pieceType) {
 		if (index < 0 || index > 31 || pieceType == OFFBOARD)
-			return false;
+			return;
 
 		if (index < 21) {
 			index = 61 - index * 3;
 			board1 = (board1 & ~(7l << index)) | ((pieceType & 7l) << index);
-		} else if (index > 21) {
-			index = 93 - index * 3;
-			board2 = (board2 & ~(7 << index)) | ((pieceType & 7) << index);
-		} else {
-			board1 = (board1 & ~1) | ((pieceType & 7) >> 2);
-			board2 = (board2 & 1073741823) | ((pieceType & 3) << 30);
+			return;
 		}
 
-		return true;
+		if (index > 21) {
+			index = 93 - index * 3;
+			board2 = (board2 & ~(7 << index)) | ((pieceType & 7) << index);
+			return;
+		}
+
+		board1 = (board1 & ~1) | ((pieceType & 7) >> 2);
+		board2 = (board2 & 1073741823) | ((pieceType & 3) << 30);
 	}
 
 	@Override
-	protected boolean setPiece(int row, int col, byte pieceType) {
-		return setPiece(getIndex(row, col), pieceType);
+	protected void setPiece(int row, int col, byte pieceType) {
+		setPiece(getIndex(row, col), pieceType);
 	}
 }

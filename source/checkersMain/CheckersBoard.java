@@ -345,10 +345,10 @@ public abstract class CheckersBoard implements Cloneable {
 	 *         {@link #OFFBOARD}
 	 */
 	public static byte upgrade(byte pieceType) {
-		if (pieceType == PLAYER1_CHECKER)
-			return PLAYER1_KING;
-		else if (pieceType == PLAYER2_CHECKER)
-			return PLAYER2_KING;
+		if (pieceType == PLAYER1_CHECKER) return PLAYER1_KING;
+
+		if (pieceType == PLAYER2_CHECKER) return PLAYER2_KING;
+
 		return pieceType;
 	}
 
@@ -511,33 +511,26 @@ public abstract class CheckersBoard implements Cloneable {
 
 	/**
 	 * Sets the contents of the given board space to the passed pieceType.
-	 * 
-	 * @param index
-	 *            - board location in the range [0,31] (top-left corner being
-	 *            zero and bottom-right corner being 31. The index increases
-	 *            from left-to-right first, then from top-to-bottom)
-	 * @param pieceType
-	 *            - one of {@link #PLAYER1_CHECKER}, {@link #PLAYER1_KING},
-	 *            {@link #PLAYER2_CHECKER}, {@link #PLAYER2_KING}, or
-	 *            {@link #EMPTY}
-	 * @return whether the method executed successfully
+	 *
+	 * @param index     - board location in the range [0,31] (top-left corner being
+	 *                  zero and bottom-right corner being 31. The index increases
+	 *                  from left-to-right first, then from top-to-bottom)
+	 * @param pieceType - one of {@link #PLAYER1_CHECKER}, {@link #PLAYER1_KING},
+	 *                  {@link #PLAYER2_CHECKER}, {@link #PLAYER2_KING}, or
+	 *                  {@link #EMPTY}
 	 */
-	protected abstract boolean setPiece(int index, byte pieceType);
+	protected abstract void setPiece(int index, byte pieceType);
 
 	/**
 	 * Sets the contents of the given board space to the passed pieceType.
-	 * 
-	 * @param row
-	 *            - row location in the range [0,7] (topmost being zero)
-	 * @param col
-	 *            - column location in the range [0,7] (leftmost being zero)
-	 * @param pieceType
-	 *            - one of {@link #PLAYER1_CHECKER}, {@link #PLAYER1_KING},
-	 *            {@link #PLAYER2_CHECKER}, {@link #PLAYER2_KING}, or
-	 *            {@link #EMPTY}
-	 * @return whether the method executed successfully
+	 *
+	 * @param row       - row location in the range [0,7] (topmost being zero)
+	 * @param col       - column location in the range [0,7] (leftmost being zero)
+	 * @param pieceType - one of {@link #PLAYER1_CHECKER}, {@link #PLAYER1_KING},
+	 *                  {@link #PLAYER2_CHECKER}, {@link #PLAYER2_KING}, or
+	 *                  {@link #EMPTY}
 	 */
-	protected abstract boolean setPiece(int row, int col, byte pieceType);
+	protected abstract void setPiece(int row, int col, byte pieceType);
 
 /**
 	 * Generic method to set this board to the passed board so that

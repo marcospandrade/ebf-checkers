@@ -706,9 +706,7 @@ public final class CheckersGameManager {
 	/**
 	 * Sets the maximum number of moves a Checkers game will last before it is
 	 * declared a draw.
-	 * 
-	 * @param maxMoves
-	 *            - The maximum number of moves a Checkers game will last
+	 * @param maxMoves - The maximum number of moves a Checkers game will last
 	 */
 	public void setMaxMoves(int maxMoves) {
 		this.maxMoves = Math.max(1, maxMoves);
@@ -716,10 +714,8 @@ public final class CheckersGameManager {
 
 	/**
 	 * Sets whether this CheckersGameManager is paused.
-	 * 
-	 * @param paused
-	 *            - If true, pauses the current Checkers game if any. If false,
-	 *            unpauses the current Checkers game if any.
+	 * @param paused -  If true, pauses the current Checkers game if any. If false,
+	 *            		unpauses the current Checkers game if any.
 	 */
 	public synchronized void setPaused(boolean paused) {
 		if (paused == this.paused)
@@ -756,9 +752,7 @@ public final class CheckersGameManager {
 
 	/**
 	 * Sets the CheckersPlayerInterface to be used for Player1.
-	 * 
-	 * @param player
-	 *            - the CheckersPlayerInterface to be used for Player1
+	 * @param player - the CheckersPlayerInterface to be used for Player1
 	 */
 	public void setPlayer1(CheckersPlayerInterface player) {
 		if (player == null || player == player1)
