@@ -55,11 +55,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import checkersMain.CheckersBoard;
-import checkersMain.CheckersGameListener;
-import checkersMain.CheckersGameManager;
-import checkersMain.CheckersPlayerInterface;
-import checkersMain.CheckersPlayerLoader;
+import checkersMain.*;
 import checkersMain.CheckersBoard.Ply;
 import checkersPlayer.Human;
 
@@ -589,6 +585,20 @@ public class CheckersGUI extends JFrame implements MouseListener,
 		this(new CheckersGameManager());
 	}
 
+	public JLabel defineJLabel(DefinitionJLabelDTO definition) {
+		JLabel customJLabel = new JLabel();
+
+		customJLabel.setOpaque(definition.isOpaque);
+		customJLabel.setHorizontalAlignment(definition.horizontalAlignment);
+		customJLabel
+				.setToolTipText(definition.tooltipText);
+		customJLabel.setForeground(definition.foregroundColor);
+		customJLabel.setBackground(definition.backgroundColor);
+		customJLabel.setBorder(definition.border);
+
+		return customJLabel;
+	}
+
 	public CheckersGUI(CheckersGameManager gameManager) {
 		this.gameManager = gameManager;
 		gameManager.addCheckersGameListener(this);
@@ -623,15 +633,20 @@ public class CheckersGUI extends JFrame implements MouseListener,
 		c.weightx = 1;
 		c.gridx = 0;
 		c.gridy = 0;
-		player2Label = new JLabel();
-		player2Label.setToolTipText("Player 2's Name and Checker & King Count");
-		player2Label.setHorizontalAlignment(SwingConstants.CENTER);
-		player2Label.setForeground(PLAYER2_COLOR);
+
+
 		border = BorderFactory.createTitledBorder(BORDER, "Player 2 - "
 				+ gameManager.getPlayer2().getName());
 		border.setTitleColor(PLAYER2_COLOR);
 		border.setTitleJustification(TitledBorder.CENTER);
-		player2Label.setBorder(border);
+		player2Label = defineJLabel(new DefinitionJLabelDTO(
+				false,
+				SwingConstants.CENTER,
+				"Player 2's Name and Checker & King Count",
+				PLAYER2_COLOR,
+				null,
+				border
+		));
 		boardContainer.add(player2Label, c);
 
 		c.weighty = 10;
@@ -644,17 +659,22 @@ public class CheckersGUI extends JFrame implements MouseListener,
 		boardContainer.add(boardScrollPane, c);
 
 		c.weighty = 0;
+
 		c.gridy++;
-		player1Label = new JLabel();
-		player1Label.setToolTipText("Player 1's Name and Checker & King Count");
-		player1Label.setHorizontalAlignment(SwingConstants.CENTER);
-		player1Label.setForeground(PLAYER1_COLOR);
+
 		border = BorderFactory.createTitledBorder(BORDER, "Player 1 - "
 				+ gameManager.getPlayer1().getName());
 		border.setTitleColor(PLAYER1_COLOR);
 		border.setTitlePosition(TitledBorder.BOTTOM);
 		border.setTitleJustification(TitledBorder.CENTER);
-		player1Label.setBorder(border);
+		player1Label = defineJLabel(new DefinitionJLabelDTO(
+				false,
+				SwingConstants.CENTER,
+				"Player 1's Name and Checker & King Count",
+				PLAYER1_COLOR,
+				null,
+				border
+		));
 		boardContainer.add(player1Label, c);
 
 		c.gridwidth = 3;
@@ -671,36 +691,40 @@ public class CheckersGUI extends JFrame implements MouseListener,
 		c.gridwidth = 1;
 		c.weightx = 1;
 		c.weighty = 0;
+
 		c.gridy++;
-		moveCount = new JLabel();
-		moveCount.setOpaque(true);
-		moveCount.setHorizontalAlignment(SwingConstants.CENTER);
-		moveCount.setToolTipText("The current move count");
-		moveCount.setForeground(NEUTRAL_FG_COLOR);
-		moveCount.setBackground(NEUTRAL_BG_COLOR);
-		moveCount.setBorder(BORDER);
+		moveCount = defineJLabel(new DefinitionJLabelDTO(
+				true,
+				SwingConstants.CENTER,
+				"The current move count",
+				NEUTRAL_FG_COLOR,
+				NEUTRAL_BG_COLOR,
+				BORDER
+		));
 		add(moveCount, c);
 
 		c.gridx++;
-		plyTime = new JLabel();
-		plyTime.setOpaque(true);
-		plyTime.setHorizontalAlignment(SwingConstants.CENTER);
-		plyTime
-				.setToolTipText("Shows the remaining time for the current player to take his turn.");
-		plyTime.setForeground(PLAYER1_COLOR);
-		plyTime.setBackground(NEUTRAL_BG_COLOR);
-		plyTime.setBorder(BORDER);
+
+		plyTime = defineJLabel(new DefinitionJLabelDTO(
+				true,
+				SwingConstants.CENTER,
+				"Shows the remaining time for the current player to take his turn.",
+				PLAYER1_COLOR,
+				NEUTRAL_BG_COLOR,
+				BORDER
+		));
 		add(plyTime, c);
 
 		c.gridx++;
-		gameTime = new JLabel();
-		gameTime.setOpaque(true);
-		gameTime.setHorizontalAlignment(SwingConstants.CENTER);
-		gameTime
-				.setToolTipText("The total time that has elapsed since the start of the game");
-		gameTime.setForeground(NEUTRAL_FG_COLOR);
-		gameTime.setBackground(NEUTRAL_BG_COLOR);
-		gameTime.setBorder(BORDER);
+
+		gameTime = defineJLabel(new DefinitionJLabelDTO(
+				true,
+				SwingConstants.CENTER,
+				"The total time that has elapsed since the start of the game",
+				NEUTRAL_FG_COLOR,
+				NEUTRAL_BG_COLOR,
+				BORDER
+		));
 		add(gameTime, c);
 
 		initActions();
