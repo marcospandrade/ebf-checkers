@@ -461,14 +461,14 @@ public class DefaultCheckersBoard extends CheckersBoard {
 	@Override
 	protected void setPiece(int index, byte pieceType) {
 		if (index < 0 || index > 31 || pieceType == OFFBOARD)
-			return false;
+			return;
 
 		board[index] = pieceType;
-		return true;
+		return;
 	}
 
 	@Override
 	protected void setPiece(int row, int col, byte pieceType) {
-		return setPiece(getIndex(row, col), pieceType);
+		setPiece(getIndex(row, col), pieceType);
 	}
 }

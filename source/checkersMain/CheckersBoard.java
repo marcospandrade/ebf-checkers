@@ -165,25 +165,32 @@ public abstract class CheckersBoard implements Cloneable {
 			board.setPiece(lastIndex, firstPiece);
 
 		if (ply.size() > 2 || Math.abs(firstIndex - lastIndex) > 5) {
-			// Is a jump or multiple jumps
-
-			// rightShiftedRow means that the squares that checkers
-			// play on are on x indices 1,3,5,7 of the row
-			boolean rightShiftedRow = firstIndex / 4 % 2 == 0;
-
-			// Is a jump or jump-chain, so remove jumped pieces
-			for (byte i = 0; i < ply.size() - 1; i++) {
-				byte index = ply.get(i);
-				byte nextIndex = ply.get(i + 1);
-				int jumpedIndex = index + nextIndex;
-				if (rightShiftedRow)
-					jumpedIndex++;
-				jumpedIndex /= 2;
-				board.setPiece(jumpedIndex, EMPTY);
-			}
+			jumpOrMultipleJumps(ply, board);
 		}
 
 		board.freeCache();
+	}
+
+	/**
+	 * Is a jump or multiple jumps
+	 *	rightShiftedRow means that the squares that checkers
+	 * 	play on are on x indices 1,3,5,7 of the row
+	 * @param ply - instance of Ply Class,
+	 * @param board - instance of CheckersBoard
+	 * @return void
+	 */
+	public static void jumpOrMultipleJumps(Ply ply, CheckersBoard board){
+		boolean rightShiftedRow = ply.get(0) / 4 % 2 == 0;
+
+		for (byte i = 0; i < ply.size() - 1; i++) {
+			byte index = ply.get(i);
+			byte nextIndex = ply.get(i + 1);
+			int jumpedIndex = index + nextIndex;
+			if (rightShiftedRow)
+				jumpedIndex++;
+			jumpedIndex /= 2;
+			board.setPiece(jumpedIndex, EMPTY);
+		}
 	}
 
 	/**
