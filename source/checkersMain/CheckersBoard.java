@@ -32,9 +32,7 @@ public abstract class CheckersBoard implements Cloneable {
 		/**
 		 * Inverts the passed {@link Ply}, so that the indices would be correct
 		 * if the board was inverted.
-		 * 
-		 * @param ply
-		 *            The {@link Ply} to be inverted
+		 * @param ply - The {@link Ply} to be inverted
 		 * @return the inverted {@link Ply}
 		 */
 		public static Ply getInvertedPly(Ply ply) {
@@ -81,77 +79,57 @@ public abstract class CheckersBoard implements Cloneable {
 		}
 	}
 
-	/**
-	 * A CheckersBoard piece constant representing an empty location.
-	 */
+
+	// A CheckersBoard piece constant representing an empty location.
 	public static final byte EMPTY = 0;
-	/**
-	 * A CheckersBoard piece constant representing an invalid location.
-	 */
+
+	//A CheckersBoard piece constant representing an invalid location.
 	public static final byte OFFBOARD = -1;
-	/**
-	 * A CheckersBoard piece constant representing a king owned by Player1.
-	 */
+
+	//A CheckersBoard piece constant representing a king owned by Player1.
 	public static final byte PLAYER1_KING = 2;
-	/**
-	 * A CheckersBoard piece constant representing a checker owned by Player1.
-	 */
+
+	//A CheckersBoard piece constant representing a checker owned by Player1.
 	public static final byte PLAYER1_CHECKER = 1;
-	/**
-	 * A CheckersBoard piece constant representing a king owned by Player2.
-	 */
+
+	//A CheckersBoard piece constant representing a king owned by Player2.
 	public static final byte PLAYER2_KING = 4;
-	/**
-	 * A CheckersBoard piece constant representing a checker owned by Player2.
-	 */
+
+	//A CheckersBoard piece constant representing a checker owned by Player2.
 	public static final byte PLAYER2_CHECKER = 3;
 
-	/**
-	 * Char constant representing the EMPTY constant.
-	 */
+	//Char constant representing the EMPTY constant.
 	public static final char EMPTY_CHAR = ' ';
-	/**
-	 * Char constant representing the PLAYER1_KING constant.
-	 */
+
+	//Char constant representing the PLAYER1_KING constant.
 	public static final char PLAYER1_KING_CHAR = 'R';
-	/**
-	 * Char constant representing the PLAYER1_CHECKER constant.
-	 */
+
+	//Char constant representing the PLAYER1_CHECKER constant.
 	public static final char PLAYER1_CHECKER_CHAR = 'r';
-	/**
-	 * Char constant representing the PLAYER2_KING constant.
-	 */
+
+	//Char constant representing the PLAYER2_KING constant.
 	public static final char PLAYER2_KING_CHAR = 'W';
-	/**
-	 * Char constant representing the PLAYER2_CHECKER constant.
-	 */
+
+	//Char constant representing the PLAYER2_CHECKER constant.
 	public static final char PLAYER2_CHECKER_CHAR = 'w';
 
-	/**
-	 * Direction constant representing NorthEast.
-	 */
+	//Direction constant representing NorthEast.
 	public static final byte NORTH_EAST = 1;
-	/**
-	 * Direction constant representing NorthWest.
-	 */
+
+	//Direction constant representing NorthWest.
 	public static final byte NORTH_WEST = 0;
-	/**
-	 * Direction constant representing SouthEast.
-	 */
+
+	//Direction constant representing SouthEast.
 	public static final byte SOUTH_EAST = 2;
-	/**
-	 * Direction constant representing SouthWest.
-	 */
+
+	//Direction constant representing SouthWest.
 	public static final byte SOUTH_WEST = 3;
 
 	/**
 	 * Applies the passed {@link Ply} to this board to get the resulting
 	 * successor board.
-	 * 
 	 * @see Ply
-	 * 
-	 * @param ply
-	 *            - the {@link Ply} to be applied to the board.
+	 * @param ply - the {@link Ply} to be applied to the board.
 	 */
 	protected static void applyPly(CheckersBoard board, Ply ply) {
 		byte firstIndex = ply.get(0);
@@ -195,11 +173,8 @@ public abstract class CheckersBoard implements Cloneable {
 
 	/**
 	 * Returns a char that represents that passed pieceType
-	 * 
-	 * @param pieceType
-	 *            - one of {@link #PLAYER1_CHECKER}, {@link #PLAYER1_KING},
-	 *            {@link #PLAYER2_CHECKER}, {@link #PLAYER2_KING}, or
-	 *            {@link #EMPTY}
+	 * @param pieceType - one of {@link #PLAYER1_CHECKER}, {@link #PLAYER1_KING},
+	 *            {@link #PLAYER2_CHECKER}, {@link #PLAYER2_KING}, or {@link #EMPTY}
 	 * @return the char that represents the pieceType
 	 */
 	public static char getChar(byte pieceType) {
@@ -219,12 +194,9 @@ public abstract class CheckersBoard implements Cloneable {
 
 	/**
 	 * Returns the column of the passed index.
-	 * 
-	 * @param index
-	 *            - board location in the range [0,31] (top-left corner being
+	 * @param index - board location in the range [0,31] (top-left corner being
 	 *            zero and bottom-right corner being 31. The index increases
 	 *            from left-to-right first, then from top-to-bottom)
-	 * 
 	 * @return the column of the passed index, or -1 if an invalid index
 	 */
 	public static int getColumn(int index) {
@@ -239,13 +211,9 @@ public abstract class CheckersBoard implements Cloneable {
 
 	/**
 	 * Returns the corresponding index for the passed row and column.
-	 * 
-	 * @param row
-	 *            - row location in the range [0,7] (topmost being zero)
-	 * @param col
-	 *            - column location in the range [0,7] (leftmost being zero)
-	 * @return the corresponding index for the passed row and column or -1 if
-	 *         passed invalid parameters.
+	 * @param row - row location in the range [0,7] (topmost being zero)
+	 * @param col - column location in the range [0,7] (leftmost being zero)
+	 * @return the corresponding index for the passed row and column or -1 if passed invalid parameters.
 	 */
 	public static int getIndex(int row, int col) {
 		if (row < 0 || row > 7 || col < 0 || col > 7 || (row + col) % 2 == 0)
@@ -258,13 +226,10 @@ public abstract class CheckersBoard implements Cloneable {
 	 * Returns the index of the neighbouring board location in the passed
 	 * direction from the passed starting index. If the location is off the
 	 * board, an invalid index will be returned.
-	 * 
-	 * @param index
-	 *            - board location in the range [0,31] (top-left corner being
+	 * @param index - board location in the range [0,31] (top-left corner being
 	 *            zero and bottom-right corner being 31. The index increases
 	 *            from left-to-right first, then from top-to-bottom)
-	 * @param direction
-	 *            - one of {@link #NORTH_WEST}, {@link #NORTH_EAST},
+	 * @param direction - one of {@link #NORTH_WEST}, {@link #NORTH_EAST},
 	 *            {@link #SOUTH_WEST}, or {@link #SOUTH_EAST}
 	 * @return the location of the neighbouring board location
 	 */
@@ -299,9 +264,7 @@ public abstract class CheckersBoard implements Cloneable {
 
 	/**
 	 * Returns the row of the passed index.
-	 * 
-	 * @param index
-	 *            - board location in the range [0,31] (top-left corner being
+	 * @param index - board location in the range [0,31] (top-left corner being
 	 *            zero and bottom-right corner being 31. The index increases
 	 *            from left-to-right first, then from top-to-bottom)
 	 * @return the row of the passed index, or -1 if an invalid index
@@ -316,9 +279,7 @@ public abstract class CheckersBoard implements Cloneable {
 	/**
 	 * Returns the piece with the player inverted, if the pieceType is owned by
 	 * a player.
-	 * 
-	 * @param pieceType
-	 *            - one of {@link #PLAYER1_CHECKER}, {@link #PLAYER1_KING},
+	 * @param pieceType - one of {@link #PLAYER1_CHECKER}, {@link #PLAYER1_KING},
 	 *            {@link #PLAYER2_CHECKER}, {@link #PLAYER2_KING}, {@link #EMPTY},
 	 *            or {@link #OFFBOARD}
 	 * @return the piece with the player inverted, if any. It will be one of
@@ -341,9 +302,7 @@ public abstract class CheckersBoard implements Cloneable {
 	/**
 	 * Returns a king owned by the same player, if the passed pieceType is a
 	 * checker, else it returns the pieceType.
-	 * 
-	 * @param pieceType
-	 *            - one of {@link #PLAYER1_CHECKER}, {@link #PLAYER1_KING},
+	 * @param pieceType - one of {@link #PLAYER1_CHECKER}, {@link #PLAYER1_KING},
 	 *            {@link #PLAYER2_CHECKER}, {@link #PLAYER2_KING}, {@link #EMPTY},
 	 *            or {@link #OFFBOARD}
 	 * @return the upgraded piece type if applicable. It will be one of
@@ -359,9 +318,7 @@ public abstract class CheckersBoard implements Cloneable {
 		return pieceType;
 	}
 
-	/**
-	 * Default Constructor
-	 */
+	// Default Constructor
 	public CheckersBoard() {
 		;
 	}
@@ -376,16 +333,13 @@ public abstract class CheckersBoard implements Cloneable {
 	/**
 	 * Returns whether the pieces in each index of this board matches the pieces
 	 * in each corresponding index of the other board.
-	 * 
 	 * @see #PLAYER1_CHECKER
 	 * @see #PLAYER1_KING
 	 * @see #PLAYER2_CHECKER
 	 * @see #PLAYER2_KING
 	 * @see #EMPTY
 	 * @see #equals(CheckersBoard)
-	 * 
-	 * @param other
-	 *            - the other CheckersBoard to compare with
+	 * @param other - the other CheckersBoard to compare with
 	 * @return whether the boards are equal
 	 */
 	public boolean equals(CheckersBoard other) {
@@ -396,20 +350,15 @@ public abstract class CheckersBoard implements Cloneable {
 		return true;
 	}
 
-	/**
-	 * Frees any caching.
-	 */
+	// Frees any caching.
 	public void freeCache() {
 	}
 
 	/**
 	 * Counts the number of pieces of the passed piece type in this
 	 * CheckersBoard
-	 * 
-	 * @param pieceType
-	 *            - one of {@link #PLAYER1_CHECKER}, {@link #PLAYER1_KING},
-	 *            {@link #PLAYER2_CHECKER}, {@link #PLAYER2_KING}, or
-	 *            {@link #EMPTY}
+	 * @param pieceType - one of {@link #PLAYER1_CHECKER}, {@link #PLAYER1_KING},
+	 *        {@link #PLAYER2_CHECKER}, {@link #PLAYER2_KING}, or {@link #EMPTY}
 	 * @return the number of pieces of piece type in this CheckersBoard
 	 */
 	public int getCount(byte pieceType) {
@@ -428,9 +377,7 @@ public abstract class CheckersBoard implements Cloneable {
 	 * number of successor boards. This method should return the same value as
 	 * {@link #getNumSuccessors()}, but in the case that nothing is cached, it
 	 * will create a list of plies to determine the plies count.
-	 * 
 	 * @see #getPly(int)
-	 * 
 	 * @return the number of possible plies
 	 */
 	public abstract int getNumPlies();
@@ -440,33 +387,25 @@ public abstract class CheckersBoard implements Cloneable {
 	 * number of possible plies. This method should return the same value as
 	 * {@link #getNumPlies()}, but in the case that nothing is cached, it will
 	 * create a list of successor boards to determine the plies count.
-	 * 
 	 * @see #getSuccessor(int)
-	 * 
 	 * @return the number of successor boards
 	 */
 	public abstract int getNumSuccessors();
 
 	/**
 	 * Returns the contents of the specified board location.
-	 * 
-	 * @param index
-	 *            - board location in the range [0,31] (top-left corner being
+	 * @param index - board location in the range [0,31] (top-left corner being
 	 *            zero and bottom-right corner being 31. The index increases
 	 *            from left-to-right first, then from top-to-bottom)
-	 * @return one of {@link #PLAYER1_CHECKER}, {@link #PLAYER1_KING},
-	 *         {@link #PLAYER2_CHECKER}, {@link #PLAYER2_KING}, {@link #EMPTY}, or
-	 *         {@link #OFFBOARD}
+	 * @return one of {@link #PLAYER1_CHECKER}, {@link #PLAYER1_KING}, {@link #PLAYER2_CHECKER},
+	 *    			{@link #PLAYER2_KING}, {@link #EMPTY}, or {@link #OFFBOARD}
 	 */
 	public abstract byte getPiece(int index);
 
 	/**
 	 * Returns the contents of the specified board location.
-	 * 
-	 * @param row
-	 *            - row location in the range [0,7] (topmost being zero)
-	 * @param col
-	 *            - column location in the range [0,7] (leftmost being zero)
+	 * @param row - row location in the range [0,7] (topmost being zero)
+	 * @param col - column location in the range [0,7] (leftmost being zero)
 	 * @return one of {@link #PLAYER1_CHECKER}, {@link #PLAYER1_KING},
 	 *         {@link #PLAYER2_CHECKER}, {@link #PLAYER2_KING}, {@link #EMPTY}, or
 	 *         {@link #OFFBOARD}
@@ -478,12 +417,9 @@ public abstract class CheckersBoard implements Cloneable {
 	 * to the passed index. The indices of the plies in the returned list should
 	 * correspond to the indices of the successor boards in the list returned
 	 * from {@link #getSuccessor(int)}.
-	 * 
 	 * @see #getNumPlies()
 	 * @see Ply
-	 * 
-	 * @param index
-	 *            - the index of the ply to retrieve
+	 * @param index - the index of the ply to retrieve
 	 * @return the ply corresponding to the passed index
 	 */
 	public abstract Ply getPly(int index);
@@ -493,11 +429,8 @@ public abstract class CheckersBoard implements Cloneable {
 	 * the ply at the corresponding index. The indices of the successor boards
 	 * returned should correspond to the indices of the plies returned from
 	 * {@link #getPly(int)}.
-	 * 
 	 * @see #getNumSuccessors()
-	 * 
-	 * @param index
-	 *            - the index of the successor to retrieve
+	 * @param index - the index of the successor to retrieve
 	 * @return the resulting CheckersBoard from the corresponding ply
 	 */
 	public abstract CheckersBoard getSuccessor(int index);
@@ -511,7 +444,6 @@ public abstract class CheckersBoard implements Cloneable {
 	 * Note: this method in combination with the caching of successor boards can
 	 * cause memory to not be released. Use the freeCache() method to help with
 	 * this.
-	 * 
 	 * @return the inverted CheckersBoard
 	 */
 	public abstract CheckersBoard invertCheckersBoard();
@@ -539,12 +471,10 @@ public abstract class CheckersBoard implements Cloneable {
 	 */
 	protected abstract void setPiece(int row, int col, byte pieceType);
 
-/**
+	/**
 	 * Generic method to set this board to the passed board so that
 	 * {@link #equals(CheckersBoard)} returns true
-	 * 
-	 * @param board
-	 *            - the CheckersBoard this board is to be set to
+	 * @param board - the CheckersBoard this board is to be set to
 	 */
 	protected void setTo(CheckersBoard board) {
 		for (int i = 0; i < 32; i++)
