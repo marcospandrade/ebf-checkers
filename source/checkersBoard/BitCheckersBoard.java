@@ -322,19 +322,11 @@ public class BitCheckersBoard extends CheckersBoard {
 	 * moves are erased. Consecutive jumps are found from recursive calls to
 	 * this method and {@link #findSuccessors(byte, byte, ArrayList)}.
 	 * 
-	 * @param index
-	 *            The board index of the piece being examined for possible moves
-	 * @param pieceType
-	 *            - Either {@link CheckersBoard#PLAYER1_CHECKER} or
-	 *            {@link CheckersBoard#PLAYER1_KING}
-	 * @param direction
-	 *            - one of {@link #NORTH_EAST}, {@link #NORTH_WEST},
-	 *            {@link #SOUTH_EAST}, or {@link #SOUTH_WEST}
-	 * @param successorsList
-	 *            A list of the currently generated successor boards
-	 * @param moveFound
-	 *            whether a move has been found for the current level of the
-	 *            search
+	 * @param index - The board index of the piece being examined for possible moves
+	 * @param pieceType - Either {@link CheckersBoard#PLAYER1_CHECKER} or {@link CheckersBoard#PLAYER1_KING}
+	 * @param direction - one of {@link #NORTH_EAST}, {@link #NORTH_WEST}, {@link #SOUTH_EAST}, or {@link #SOUTH_WEST}
+	 * @param successorsList - A list of the currently generated successor boards
+	 * @param moveFound - whether a move has been found for the current level of the search
 	 * @return whether the method found a move
 	 */
 	protected boolean findSuccessors(byte index, byte pieceType,
@@ -474,22 +466,26 @@ public class BitCheckersBoard extends CheckersBoard {
 		return board;
 	}
 
-	@Override
-	protected void setPiece(int index, byte pieceType) {
-		if (index < 0 || index > 31 || pieceType == OFFBOARD)
-			return;
-
-		if (index < 21) {
+	private boolean validateSetPiece(int index, byte pieceType){
+		if(index < 21) {
 			index = 61 - index * 3;
 			board1 = (board1 & ~(7l << index)) | ((pieceType & 7l) << index);
-			return;
+			return true;
 		}
 
 		if (index > 21) {
 			index = 93 - index * 3;
 			board2 = (board2 & ~(7 << index)) | ((pieceType & 7) << index);
-			return;
+			return true;
 		}
+		return false;
+	}
+
+	@Override
+	protected void setPiece(int index, byte pieceType) {
+		if (index < 0 || index > 31 || pieceType == OFFBOARD) return;
+
+		if(validateSetPiece(index, pieceType)) return;
 
 		board1 = (board1 & ~1) | ((pieceType & 7) >> 2);
 		board2 = (board2 & 1073741823) | ((pieceType & 3) << 30);
