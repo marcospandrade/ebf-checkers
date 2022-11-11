@@ -58,7 +58,6 @@ import javax.swing.event.ListSelectionListener;
 import checkersMain.*;
 import checkersMain.CheckersBoard.Ply;
 import checkersPlayer.Human;
-import helpers.DefinitionJLabelDTO;
 
 /**
  * A simple graphical user interface to allow humans and AI CheckerPlayers to
