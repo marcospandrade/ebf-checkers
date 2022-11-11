@@ -1,4 +1,4 @@
-package checkersMain;
+package helpers;
 
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
