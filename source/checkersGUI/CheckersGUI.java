@@ -58,6 +58,7 @@ import javax.swing.event.ListSelectionListener;
 import checkersMain.*;
 import checkersMain.CheckersBoard.Ply;
 import checkersPlayer.Human;
+import utilsGUI.DefinitionJLabelDTO;
 
 /**
  * A simple graphical user interface to allow humans and AI CheckerPlayers to
@@ -183,11 +184,10 @@ public class CheckersGUI extends JFrame implements MouseListener,
 		}
 
 		@Override
-		public synchronized void paint(Graphics g) {
-			super.paint(g);
+		public synchronized void paint(Graphics graphic) {
+			super.paint(graphic);
 
-			if (selectedState == null)
-				return;
+			if (selectedState == null) return;
 
 			for (int x = 0; x < 8; x++) {
 				int sqX = offsetX + x * tileSize;
@@ -195,8 +195,7 @@ public class CheckersGUI extends JFrame implements MouseListener,
 					int sqY = offsetY + y * tileSize;
 					boolean heldPiece = false;
 
-					if ((x + y) % 2 == 0)
-						g.setColor(TILE1_COLOR);
+					if ((x + y) % 2 == 0) graphic.setColor(TILE1_COLOR);
 					else {
 						boolean colorSet = false;
 
@@ -205,7 +204,7 @@ public class CheckersGUI extends JFrame implements MouseListener,
 							if (showMoves && !showingOldPly) {
 								for (PossiblePly ply : sortedPlies) {
 									if (ply.plies.get(0).get(0) == index) {
-										g.setColor(MOVE_ENDS_COLOR);
+										graphic.setColor(MOVE_ENDS_COLOR);
 										colorSet = true;
 										break;
 									}
@@ -213,19 +212,19 @@ public class CheckersGUI extends JFrame implements MouseListener,
 							}
 						} else if (currMove.plies.get(0).get(0) == index) {
 							if (showMoves && !showingOldPly) {
-								g.setColor(MOVE_ENDS_COLOR);
+								graphic.setColor(MOVE_ENDS_COLOR);
 								colorSet = true;
 							}
 							heldPiece = true;
 						} else if (showMoves && !showingOldPly) {
 							for (Ply ply : currMove.plies) {
 								if (ply.get(ply.size() - 1) == index) {
-									g.setColor(MOVE_ENDS_COLOR);
+									graphic.setColor(MOVE_ENDS_COLOR);
 									colorSet = true;
 								} else {
 									for (int i = 1; i < ply.size() - 1; i++) {
 										if (ply.get(i) == index) {
-											g.setColor(JUMP_INTERMEDIATE_COLOR);
+											graphic.setColor(JUMP_INTERMEDIATE_COLOR);
 											colorSet = true;
 											break;
 										}
@@ -233,13 +232,13 @@ public class CheckersGUI extends JFrame implements MouseListener,
 								}
 							}
 						}
-						if (!colorSet)
-							g.setColor(TILE2_COLOR);
+
+						if (!colorSet) graphic.setColor(TILE2_COLOR);
 					}
-					g.fillRect(sqX, sqY, tileSize, tileSize);
+					graphic.fillRect(sqX, sqY, tileSize, tileSize);
 
 					if (!heldPiece) {
-						drawCheckersPiece(g, PLAYER1_COLOR, PLAYER2_COLOR, sqX
+						drawCheckersPiece(graphic, PLAYER1_COLOR, PLAYER2_COLOR, sqX
 								+ checkersFillOffset, sqY + checkersFillOffset,
 								tileSize - checkersFillOffset * 2,
 								selectedState.board.getPiece(y, x));
@@ -250,9 +249,9 @@ public class CheckersGUI extends JFrame implements MouseListener,
 			if (selectedState.lastMove != null) {
 				for (int i = 0; i < selectedState.lastMove.size(); i++) {
 					if (i == 0 || i == selectedState.lastMove.size() - 1)
-						g.setColor(OLD_MOVE_ENDS_COLOR);
+						graphic.setColor(OLD_MOVE_ENDS_COLOR);
 					else
-						g.setColor(OLD_JUMP_INTERMEDIATE_COLOR);
+						graphic.setColor(OLD_JUMP_INTERMEDIATE_COLOR);
 
 					int index = selectedState.lastMove.get(i);
 					int x = index % 4 * 2;
@@ -263,7 +262,7 @@ public class CheckersGUI extends JFrame implements MouseListener,
 					y = offsetY + y * tileSize;
 
 					for (int j = 0; j < tileBorderSize; j++)
-						g.drawRect(x + j, y + j, tileSize - 2 * j, tileSize - 2
+						graphic.drawRect(x + j, y + j, tileSize - 2 * j, tileSize - 2
 								* j);
 				}
 			}
@@ -271,20 +270,24 @@ public class CheckersGUI extends JFrame implements MouseListener,
 			if (currMove != null) {
 				int index = currMove.plies.get(0).get(0);
 				int size = tileSize - checkersFillOffset * 2;
-				drawCheckersPiece(g, PLAYER1_ALPHA_COLOR, PLAYER2_ALPHA_COLOR,
+				drawCheckersPiece(graphic, PLAYER1_ALPHA_COLOR, PLAYER2_ALPHA_COLOR,
 						offsetX + oldMouseX - size / 2, offsetY + oldMouseY
 								- size / 2, size, selectedState.board
 								.getPiece(index));
 			}
 
 			if (gameManager.isPaused()) {
-				g.setColor(NEUTRAL_FG_COLOR);
-				g.setFont(pausedFont);
-				g.drawString(PAUSED_TEXT, pausedTextX, pausedTextY);
-
-				g.setFont(subPausedFont);
-				g.drawString(SUB_PAUSED_TEXT, subPausedTextX, subPausedTextY);
+				setScreenToGamePaused(graphic);
 			}
+		}
+
+		public void setScreenToGamePaused(Graphics graphic){
+			graphic.setColor(NEUTRAL_FG_COLOR);
+			graphic.setFont(pausedFont);
+			graphic.drawString(PAUSED_TEXT, pausedTextX, pausedTextY);
+
+			graphic.setFont(subPausedFont);
+			graphic.drawString(SUB_PAUSED_TEXT, subPausedTextX, subPausedTextY);
 		}
 
 		public void setTileSize(int tileSize) {
@@ -450,8 +453,9 @@ public class CheckersGUI extends JFrame implements MouseListener,
 	public static final String ABOUT_FILE_PATH = "EBFCheckers_About.txt";
 	public static final String ABOUT_TEXT;
 	public static final Color HIGHLIGHT_COLOR = new Color(0, 0, 0),
-			TILE1_COLOR = new Color(240, 220, 130), TILE2_COLOR = new Color(0,
-					130, 40), NEUTRAL_FG_COLOR = new Color(150, 150, 150),
+			TILE1_COLOR = new Color(240, 220, 130),
+			TILE2_COLOR = new Color(0,130, 40),
+			NEUTRAL_FG_COLOR = new Color(150, 150, 150),
 			NEUTRAL_BG_COLOR = Color.BLACK, MOVE_ENDS_COLOR = Color.GREEN,
 			JUMP_INTERMEDIATE_COLOR = Color.CYAN,
 			OLD_MOVE_ENDS_COLOR = Color.BLUE,

@@ -1,4 +1,4 @@
-package checkersMain;
+package utilsGUI;
 
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
@@ -29,6 +29,5 @@ public class DefinitionJLabelDTO {
         this.foregroundColor = foregroundColor;
         this.backgroundColor = backgroundColor;
         this.border = border;
-
     }
 }
