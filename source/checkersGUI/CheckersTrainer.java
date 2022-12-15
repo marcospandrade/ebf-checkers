@@ -425,7 +425,7 @@ public class CheckersTrainer extends JFrame implements WindowListener,
 		public void insert(int rowIndex) {
 			rowIndex = Math.max(0, rowIndex);
 			int initRowIndex = rowIndex;
-			for (Object o : playersList.getSelectedValues())
+			for (Object o : playersList.getSelectedValuesList())
 				model.insertRow(rowIndex++, new Object[] { o, 0, 0, 0, 0 });
 
 			table.setRowSelectionInterval(initRowIndex, rowIndex - 1);
