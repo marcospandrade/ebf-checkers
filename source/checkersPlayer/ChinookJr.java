@@ -107,6 +107,9 @@ public class ChinookJr implements CheckersPlayerInterface {
 		return "ChinookJr";
 	}
 
+	@Override
+	public void setName(String newName) {}
+
 	protected float getPieceCountScore(CheckersBoard board) {
 		HEUR_GEN_COUNT++;
 		float pieceScore = 0;

@@ -333,6 +333,9 @@ public class HAL900 implements CheckersPlayerInterface {
 	}
 
 	@Override
+	public void setName(String newName) {}
+
+	@Override
 	public void remainingTimeChanged(CheckersPlayerEvent cpe) {
 		this.remainingTime = cpe.remainingPlyTime;
 

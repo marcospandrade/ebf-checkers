@@ -38,4 +38,7 @@ public class HAL900S extends HAL900 implements CheckersPlayerInterface {
 	public String getName() {
 		return getClass().getSimpleName();
 	}
+
+	@Override
+	public void setName(String newName) {}
 }

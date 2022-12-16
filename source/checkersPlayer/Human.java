@@ -7,6 +7,7 @@ public class Human implements CheckersPlayerInterface {
 	private CheckersBoard board;
 	private int moveIndex;
 	private int remainingTime;
+	private String playerName = null;
 
 	@Override
 	public int choosePlyIndex(CheckersPlayerEvent cpe) {
@@ -42,7 +43,12 @@ public class Human implements CheckersPlayerInterface {
 	}
 
 	public String getName() {
-		return "Human";
+		if(playerName == null) return "Human";
+		return playerName;
+	}
+
+	public void setName(String name){
+		playerName = name;
 	}
 
 	public int getRemainingPlyTime() {

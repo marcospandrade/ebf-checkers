@@ -140,6 +140,8 @@ public interface CheckersPlayerInterface {
 	 */
 	public String getName();
 
+	public void setName(String newName);
+
 	/**
 	 * Notifies this {@link CheckersPlayerInterface} on how much time is
 	 * remaining for its {@link #choosePlyIndex(CheckersPlayerEvent)} method to
