@@ -189,7 +189,7 @@ public final class CheckersGameManager {
 					break;
 				}
 
-				// If Player1 has no moves available a, Player2 wins.
+				// If Player1 has no moves available, Player2 wins.
 				if (board.getNumPlies() == 0) {
 					gameOutcome = PLAYER2_WINS;
 					break;

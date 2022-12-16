@@ -23,6 +23,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -162,7 +163,7 @@ public class CheckersGUI extends JFrame implements MouseListener,
 			g.fillOval(x + checkersBorderSize, y + checkersBorderSize, size
 					- checkersBorderSize * 2, size - checkersBorderSize * 2);
 
-			// Draw 'K' in opposite color if checker is a king
+			// Draw 'Q' in opposite color if checker is a king
 			if (piece == CheckersBoard.PLAYER2_KING
 					|| piece == CheckersBoard.PLAYER1_KING) {
 				if (!player1)
@@ -171,7 +172,7 @@ public class CheckersGUI extends JFrame implements MouseListener,
 					g.setColor(color2);
 				g.setFont(kingFont);
 				int fontSize = kingFont.getSize() * 2 / 3;
-				g.drawString("K", x + (size - fontSize) / 2, y
+				g.drawString("Q", x + (size - fontSize) / 2, y
 						+ (size + fontSize) / 2);
 			}
 
@@ -568,8 +569,8 @@ public class CheckersGUI extends JFrame implements MouseListener,
 	private PossiblePly currMove;
 	private CheckersGameManager gameManager;
 
-	private Action newGame, pause, quit, playerSetup, gameOptions,
-			createTrainer, help, changeLog, license, about;
+	private Action newGame, pause, quit, playerSetup, gameOptions, changePlayersNickName,
+			createTrainer, help, changeLog, license, about, changeTheme;
 	private JLabel player1Label, player2Label, plyTime, gameTime, moveCount;
 	private GameState selectedState;
 
@@ -944,6 +945,28 @@ public class CheckersGUI extends JFrame implements MouseListener,
 				repaint();
 			}
 		};
+
+		changePlayersNickName = new AbstractAction(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				boolean paused = gameManager.isPaused();
+				if (!paused)
+					gameManager.setPaused(true);
+				repaint();
+
+				CheckersPlayerInterface player1 = gameManager.getPlayer1();
+				CheckersPlayerInterface player2 = gameManager.getPlayer2();
+
+				ChangePlayerNameDialog dialog = new ChangePlayerNameDialog(
+						CheckersGUI.this, player1, player2);
+				updatePlayerLabels();
+				dialog.dispose();
+
+				if (paused)
+					gameManager.setPaused(false);
+				repaint();
+			}
+		};
 		gameOptions = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1042,10 +1065,33 @@ public class CheckersGUI extends JFrame implements MouseListener,
 			}
 		};
 
+		changeTheme = new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+//				border = BorderFactory.createTitledBorder(BORDER, "Player 2 - "
+//						+ gameManager.getPlayer2().getName());
+//				border.setTitleColor(PLAYER2_COLOR);
+//				border.setTitleJustification(TitledBorder.CENTER);
+//				player2Label = defineJLabel(new DefinitionJLabelDTO(
+//						false,
+//						SwingConstants.CENTER,
+//						"Player 2's Name and Checker & King Count",
+//						PLAYER2_COLOR,
+//						null,
+//						border
+//				));
+//				boardContainer.add(player2Label, c);
+
+				repaint();
+			}
+		};
+
 		newGame.putValue(Action.NAME, "New Game");
 		pause.putValue(Action.NAME, "Pause");
 		quit.putValue(Action.NAME, "Quit");
 		playerSetup.putValue(Action.NAME, "Player Setup");
+		changePlayersNickName.putValue(Action.NAME, "Change Players NickName");
+		changeTheme.putValue(Action.NAME, "Change Theme");
 		gameOptions.putValue(Action.NAME, "Game Options");
 		createTrainer.putValue(Action.NAME, "CheckersTrainer");
 		help.putValue(Action.NAME, "Help");
@@ -1073,6 +1119,10 @@ public class CheckersGUI extends JFrame implements MouseListener,
 				KeyEvent.VK_F11, 0));
 		about.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
 				KeyEvent.VK_F12, 0));
+		changeTheme.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
+				KeyEvent.VK_2, 0));
+		changePlayersNickName.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
+				KeyEvent.VK_C, 0));
 	}
 
 	private void initMenu() {
@@ -1084,6 +1134,8 @@ public class CheckersGUI extends JFrame implements MouseListener,
 		JMenu settings = new JMenu("Settings");
 		settings.add(new JMenuItem(playerSetup));
 		settings.add(new JMenuItem(gameOptions));
+		settings.add(new JMenuItem(changePlayersNickName));
+		settings.add(new JMenuItem(changeTheme));
 
 		JMenu toolsM = new JMenu("Tools");
 		toolsM.add(new JMenuItem(createTrainer));
