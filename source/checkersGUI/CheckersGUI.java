@@ -573,7 +573,13 @@ public class CheckersGUI extends JFrame implements MouseListener,
 
 	private Action newGame, pause, quit, playerSetup, gameOptions, changePlayersNickName,
 			createTrainer, help, changeLog, license, about, changeTheme;
-	private JLabel player1Label, player2Label, plyTime, gameTime, moveCount;
+	private JLabel player1Label;
+	private JLabel player2Label;
+
+	private DefinitionJLabelDTO definitionJLabel;
+	private JLabel plyTime;
+	private JLabel gameTime;
+	private JLabel moveCount;
 	private GameState selectedState;
 
 	private boolean showingOldPly, autoSwitch, showMoves, switchPlayers;
@@ -592,17 +598,16 @@ public class CheckersGUI extends JFrame implements MouseListener,
 	}
 
 	public JLabel defineJLabel(DefinitionJLabelDTO definition) {
-		JLabel customJLabel = new JLabel();
+		JLabel newLabel = new JLabel();
 
-		customJLabel.setOpaque(definition.isOpaque);
-		customJLabel.setHorizontalAlignment(definition.horizontalAlignment);
-		customJLabel
-				.setToolTipText(definition.tooltipText);
-		customJLabel.setForeground(definition.foregroundColor);
-		customJLabel.setBackground(definition.backgroundColor);
-		customJLabel.setBorder(definition.border);
+		newLabel.setOpaque(definition.isOpaque);
+		newLabel.setHorizontalAlignment(definition.horizontalAlignment);
+		newLabel.setToolTipText(definition.tooltipText);
+		newLabel.setForeground(definition.foregroundColor);
+		newLabel.setBackground(definition.backgroundColor);
+		newLabel.setBorder(definition.border);
 
-		return customJLabel;
+		return newLabel;
 	}
 
 	public CheckersGUI(CheckersGameManager gameManager) {
@@ -674,12 +679,12 @@ public class CheckersGUI extends JFrame implements MouseListener,
 		border.setTitlePosition(TitledBorder.BOTTOM);
 		border.setTitleJustification(TitledBorder.CENTER);
 		player1Label = defineJLabel(new DefinitionJLabelDTO(
-				false,
-				SwingConstants.CENTER,
-				"Player 1's Name and Checker & King Count",
-				PLAYER1_COLOR,
-				null,
-				border
+			false,
+			SwingConstants.CENTER,
+			"Player 1's Name and Checker & King Count",
+			PLAYER1_COLOR,
+			null,
+			border
 		));
 		boardContainer.add(player1Label, c);
 
