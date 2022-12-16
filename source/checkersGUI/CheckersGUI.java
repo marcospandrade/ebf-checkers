@@ -94,6 +94,8 @@ public class CheckersGUI extends JFrame implements MouseListener,
 		private Dimension preferredSize;
 		private int tileSize, offsetX, offsetY;
 
+		private Boolean defaultTheme = true;
+
 		public CheckersPanel() {
 			setBackground(NEUTRAL_BG_COLOR);
 			addComponentListener(this);
@@ -234,7 +236,7 @@ public class CheckersGUI extends JFrame implements MouseListener,
 							}
 						}
 
-						if (!colorSet) graphic.setColor(TILE2_COLOR);
+						if (!colorSet) graphic.setColor(defaultTheme ? TILE2_COLOR : TILE3_COLOR);
 					}
 					graphic.fillRect(sqX, sqY, tileSize, tileSize);
 
@@ -456,6 +458,8 @@ public class CheckersGUI extends JFrame implements MouseListener,
 	public static final Color HIGHLIGHT_COLOR = new Color(0, 0, 0),
 			TILE1_COLOR = new Color(240, 220, 130),
 			TILE2_COLOR = new Color(0,130, 40),
+
+			TILE3_COLOR = new Color(21, 86, 182),
 			NEUTRAL_FG_COLOR = new Color(150, 150, 150),
 			NEUTRAL_BG_COLOR = Color.BLACK, MOVE_ENDS_COLOR = Color.GREEN,
 			JUMP_INTERMEDIATE_COLOR = Color.CYAN,
@@ -514,9 +518,7 @@ public class CheckersGUI extends JFrame implements MouseListener,
 
 	/**
 	 * Creates and formats a string to represent a KeyStroke.
-	 * 
-	 * @param stroke
-	 *            the KeyStroke
+	 * @param stroke the KeyStroke
 	 * @return the text displayed
 	 */
 	public static String getKeyStrokeText(KeyStroke stroke) {
@@ -893,6 +895,7 @@ public class CheckersGUI extends JFrame implements MouseListener,
 				showingOldPly = false;
 			}
 		};
+
 		pause = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -907,6 +910,7 @@ public class CheckersGUI extends JFrame implements MouseListener,
 				repaint();
 			}
 		};
+
 		quit = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -918,6 +922,7 @@ public class CheckersGUI extends JFrame implements MouseListener,
 					gameManager.setPaused(false);
 			}
 		};
+
 		playerSetup = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -967,6 +972,15 @@ public class CheckersGUI extends JFrame implements MouseListener,
 				repaint();
 			}
 		};
+
+		changeTheme = new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				board.defaultTheme = !board.defaultTheme;
+				repaint();
+			}
+		};
+
 		gameOptions = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -992,6 +1006,7 @@ public class CheckersGUI extends JFrame implements MouseListener,
 				repaint();
 			}
 		};
+
 		createTrainer = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1000,6 +1015,7 @@ public class CheckersGUI extends JFrame implements MouseListener,
 				gameManager.stop();
 			}
 		};
+
 		help = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1016,6 +1032,7 @@ public class CheckersGUI extends JFrame implements MouseListener,
 				repaint();
 			}
 		};
+
 		changeLog = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1032,6 +1049,7 @@ public class CheckersGUI extends JFrame implements MouseListener,
 				repaint();
 			}
 		};
+
 		license = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1048,6 +1066,7 @@ public class CheckersGUI extends JFrame implements MouseListener,
 				repaint();
 			}
 		};
+
 		about = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1061,27 +1080,6 @@ public class CheckersGUI extends JFrame implements MouseListener,
 
 				if (!paused)
 					gameManager.setPaused(false);
-				repaint();
-			}
-		};
-
-		changeTheme = new AbstractAction() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-//				border = BorderFactory.createTitledBorder(BORDER, "Player 2 - "
-//						+ gameManager.getPlayer2().getName());
-//				border.setTitleColor(PLAYER2_COLOR);
-//				border.setTitleJustification(TitledBorder.CENTER);
-//				player2Label = defineJLabel(new DefinitionJLabelDTO(
-//						false,
-//						SwingConstants.CENTER,
-//						"Player 2's Name and Checker & King Count",
-//						PLAYER2_COLOR,
-//						null,
-//						border
-//				));
-//				boardContainer.add(player2Label, c);
-
 				repaint();
 			}
 		};
