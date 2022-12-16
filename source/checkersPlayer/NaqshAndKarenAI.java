@@ -98,6 +98,11 @@ public class NaqshAndKarenAI implements CheckersPlayerInterface {
 		return "Naqsh&Karen AI";
 	}
 
+	@Override
+	public void setName(String newName) {
+
+	}
+
 	private double helper(CheckersBoard theBoard, double eval, int l,
 			CheckersBoard initialBoard) {
 		int numPieces = 0, numIPieces = 0, numKings = 0, numIKings = 0, numEvil = 0, numIEvil = 0, numIEvilKings = 0, numEvilKings = 0;

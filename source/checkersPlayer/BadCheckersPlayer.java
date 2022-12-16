@@ -259,6 +259,9 @@ public class BadCheckersPlayer implements CheckersPlayerInterface {
 		return "The Bad Checkers Player";
 	}
 
+	@Override
+	public void setName(String newName) {}
+
 	private float heuristic(CheckersBoard currB, int num) {
 		if (myTimeLeft < myCutTime) {
 			return 1000;

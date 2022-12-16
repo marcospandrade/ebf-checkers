@@ -124,6 +124,9 @@ public class BasicAI implements CheckersPlayerInterface {
 	}
 
 	@Override
+	public void setName(String newName) {}
+
+	@Override
 	public void remainingTimeChanged(CheckersPlayerEvent cpe) {
 	}
 }
